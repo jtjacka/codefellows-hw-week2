@@ -18,6 +18,11 @@ class ViewController: UIViewController {
     super.viewDidLoad()
     // Do any additional setup after loading the view, typically from a nib.
     
+    let testObject = PFObject(className: "TestObject")
+    testObject["foo"] = "bar"
+    testObject.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
+      println("Object has been saved.")
+    }
     
     
     self.imagePicker.delegate = self
@@ -47,21 +52,32 @@ class ViewController: UIViewController {
       
       self.imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
       self.presentViewController(self.imagePicker, animated: true, completion: nil)
-      
-      
     }
     
     let applyFilter = UIAlertAction(title: "Choose Filter", style: UIAlertActionStyle.Default) { (action) -> Void in
       self.filterAlert()
     }
     
+    let uploadToParse = UIAlertAction(title: "Upload to Parse", style: UIAlertActionStyle.Default) { (action) -> Void in
+     //probably do something
+      if let image = self.mainImage.image {
+        ParseService.uploadImageToParse(image, completion: { (result) -> Void in
+          println("\(result)")
+        })
+      }
+    }
     
+    
+    
+    //Logic for when to display actions
     if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
       action.addAction(takePicture)
     }
     
+    
     if let image = self.mainImage.image {
       action.addAction(applyFilter)
+      action.addAction(uploadToParse)
     }
     
     
@@ -109,6 +125,7 @@ class ViewController: UIViewController {
       }
       
     }
+    
     
     action.addAction(cancel)
     action.addAction(sepiaFilter)
