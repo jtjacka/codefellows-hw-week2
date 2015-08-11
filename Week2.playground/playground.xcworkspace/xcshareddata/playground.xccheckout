@@ -5,20 +5,20 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>40BC3847-6121-4578-8ACC-AC17D657EB8D</string>
+	<string>B3AFFE22-6906-40C4-A050-63EF3B48B32E</string>
 	<key>IDESourceControlProjectName</key>
-	<string>project</string>
+	<string>playground</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>A131704341A71509CC6A7ABA4E2D5109884F4ACE</key>
 		<string>https://github.com/jtjacka/codefellows-hw-week2.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Photo Filters App/ParseStarterProject.xcodeproj/project.xcworkspace</string>
+	<string>Week2.playground/playground.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>A131704341A71509CC6A7ABA4E2D5109884F4ACE</key>
-		<string>../../..</string>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/jtjacka/codefellows-hw-week2.git</string>
