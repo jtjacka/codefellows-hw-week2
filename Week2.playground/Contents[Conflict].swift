@@ -1,7 +1,7 @@
 //Codefellows - Week 2 - Jeff Jacka
 //MARK: Monday
 
-var sentence = "How many words are in this sentence?"
+var sentence = "How many words are in this sentence and how about now?"
 var arrayFromSentence = Array(sentence)
 
 var wordCount = 0

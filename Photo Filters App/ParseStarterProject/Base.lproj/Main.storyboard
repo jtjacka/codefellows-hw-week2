@@ -27,7 +27,7 @@
                                     <action selector="buttonClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Dfh-Vc-1ie"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CuC-97-xV5">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CuC-97-xV5">
                                 <rect key="frame" x="125" y="28" width="350" height="350"/>
                                 <animations/>
                                 <constraints>
@@ -81,12 +81,20 @@
                             <constraint firstAttribute="trailing" secondItem="eVL-cq-Gkb" secondAttribute="trailing" id="b8O-Iq-eed"/>
                             <constraint firstItem="eVL-cq-Gkb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="fkM-0a-o9J"/>
                             <constraint firstItem="uX2-bE-74f" firstAttribute="top" secondItem="CuC-97-xV5" secondAttribute="bottom" constant="8" id="kaf-lX-uXA"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="eVL-cq-Gkb" secondAttribute="bottom" constant="-100" id="zni-I0-bcD"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="Hmb-pV-PPX"/>
                                 <exclude reference="b8O-Iq-eed"/>
                                 <exclude reference="fkM-0a-o9J"/>
+                                <exclude reference="zni-I0-bcD"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="constraints">
+                                <exclude reference="QRC-5E-bIx"/>
+                                <include reference="zni-I0-bcD"/>
                             </mask>
                         </variation>
                     </view>
