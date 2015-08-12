@@ -111,7 +111,7 @@ class PhotoEditorViewController : UIViewController {
     
     let sepiaFilter = UIAlertAction(title: "Sepia", style: UIAlertActionStyle.Default) { (action) -> Void in
       if let mainImage = self.mainImage.image {
-        FilterService.applySepiaFilter(mainImage, completion: { (filteredImage) -> Void in
+        FilterService.applySepiaFilter(mainImage, completion: { (filteredImage, filterName) -> Void in
           self.mainImage.image = filteredImage
         })
       }
@@ -121,7 +121,7 @@ class PhotoEditorViewController : UIViewController {
     
     let vibranceFilter = UIAlertAction(title: "Vibrance", style: UIAlertActionStyle.Default) { (action) -> Void in
       if let mainImage = self.mainImage.image {
-        FilterService.applyVibranceFilter(mainImage, completion: { (filteredImage) -> Void in
+        FilterService.applyVibranceFilter(mainImage, completion: { (filteredImage, filterName) -> Void in
           self.mainImage.image = filteredImage
         })
       }
@@ -130,7 +130,7 @@ class PhotoEditorViewController : UIViewController {
     
     let colorCubeFilter = UIAlertAction(title: "Color Cube", style: UIAlertActionStyle.Default) { (action) -> Void in
       if let mainImage = self.mainImage.image {
-        FilterService.applyColorCubeFilter(mainImage, completion: { (filteredImage) -> Void in
+        FilterService.applyColorCubeFilter(mainImage, completion: { (filteredImage, filterName) -> Void in
           self.mainImage.image = filteredImage
         })
       }
@@ -222,8 +222,9 @@ extension PhotoEditorViewController : UICollectionViewDataSource {
     let filterFunction = filterFunctions[indexPath.row]
     
     if let image = mainImage.image {
-      filterFunction(image, completion: { (filteredImage) -> Void in
+      filterFunction(image, completion: { (filteredImage, filterName) -> Void in
         cell.filterPreview?.image = filteredImage
+        cell.filterName?.text = filterName
       })
     }
 

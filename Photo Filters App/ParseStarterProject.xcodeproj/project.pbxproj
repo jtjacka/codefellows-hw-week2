@@ -11,6 +11,7 @@
 		1F651EB31B7AB5B10093E76F /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F651EB21B7AB5B10093E76F /* Keys.swift */; };
 		1F8124151B79981100637EBF /* FilterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8124141B79981100637EBF /* FilterService.swift */; };
 		1FD6B61D1B7BD888009677DA /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B61C1B7BD888009677DA /* FilterCell.swift */; };
+		1FD6B61F1B7BF7D0009677DA /* ImageResizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FD6B61E1B7BF7D0009677DA /* ImageResizer.swift */; };
 		81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814A1A49DA1800E65899 /* AppDelegate.swift */; };
 		81BA814D1A49DA1800E65899 /* PhotoEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81BA814C1A49DA1800E65899 /* PhotoEditorViewController.swift */; };
 		81BA81501A49DA1800E65899 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81BA814E1A49DA1800E65899 /* Main.storyboard */; };
@@ -31,6 +32,7 @@
 		1F651EB21B7AB5B10093E76F /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		1F8124141B79981100637EBF /* FilterService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterService.swift; sourceTree = "<group>"; };
 		1FD6B61C1B7BD888009677DA /* FilterCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
+		1FD6B61E1B7BF7D0009677DA /* ImageResizer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageResizer.swift; sourceTree = "<group>"; };
 		81BA81451A49DA1800E65899 /* ParseStarterProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ParseStarterProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81BA81491A49DA1800E65899 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81BA814A1A49DA1800E65899 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 			children = (
 				1F8124141B79981100637EBF /* FilterService.swift */,
 				1F651EAA1B7A6E100093E76F /* ParseService.swift */,
+				1FD6B61E1B7BF7D0009677DA /* ImageResizer.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -249,6 +252,7 @@
 			files = (
 				1F8124151B79981100637EBF /* FilterService.swift in Sources */,
 				1FD6B61D1B7BD888009677DA /* FilterCell.swift in Sources */,
+				1FD6B61F1B7BF7D0009677DA /* ImageResizer.swift in Sources */,
 				1F651EAB1B7A6E100093E76F /* ParseService.swift in Sources */,
 				81BA814D1A49DA1800E65899 /* PhotoEditorViewController.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
