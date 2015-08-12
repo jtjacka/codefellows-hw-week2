@@ -148,6 +148,7 @@ class PhotoEditorViewController : UIViewController {
     
     if let popover = action.popoverPresentationController {
       popover.sourceView = view
+      
       popover.sourceRect = actionButton.frame
     }
     
