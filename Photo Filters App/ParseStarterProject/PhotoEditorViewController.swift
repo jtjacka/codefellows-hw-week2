@@ -7,22 +7,28 @@
 import UIKit
 import Parse
 
-class ViewController: UIViewController {
+class PhotoEditorViewController : UIViewController {
   
   @IBOutlet weak var mainImage: UIImageView!
-  @IBOutlet weak var filterCollectionView: UICollectionView!
   @IBOutlet weak var actionButton: UIButton!
   @IBOutlet weak var collectionViewConstraint: NSLayoutConstraint!
+  @IBOutlet weak var collectionView: UICollectionView!
   
   let imagePicker = UIImagePickerController()
+  
+  let filterFunctions = [FilterService.applyColorCubeFilter, FilterService.applySepiaFilter, FilterService.applyVibranceFilter]
   
   
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view, typically from a nib.
     
-    self.imagePicker.delegate = self
     
+    
+    
+    self.imagePicker.delegate = self
+    self.collectionView.dataSource = self
+    self.collectionView.delegate = self
   }
   
   
@@ -82,7 +88,7 @@ class ViewController: UIViewController {
     action.addAction(cancel)
     action.addAction(choseImage)
     
-    //Popover
+    //Popover for iPad
     action.modalPresentationStyle = UIModalPresentationStyle.Popover
     
     if let popover = action.popoverPresentationController {
@@ -149,24 +155,43 @@ class ViewController: UIViewController {
     self.presentViewController(action, animated: true, completion: nil)
   }
   
+  func goToFilterMode() {
+    //Collection View Constraint
+    collectionViewConstraint.constant = 0
+    
+    UIView.animateWithDuration(0.5) { () -> Void in
+      self.view.layoutIfNeeded()
+    }
+    
+    let doneButton = UIBarButtonItem(title: "Done", style: UIBarButtonItemStyle.Done, target: self, action: "exitFilterMode")
+    navigationItem.rightBarButtonItem = doneButton
+    navigationItem.rightBarButtonItem?.tintColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+    
+  }
+  
+  func exitFilterMode() {
+    println("Exit filter mode")
+    
+    navigationItem.rightBarButtonItem = nil
+    
+    collectionViewConstraint.constant = -70
+    UIView.animateWithDuration(0.3) { () -> Void in
+      self.view.layoutIfNeeded()
+    }
+    
+  }
+  
 }
 
-extension ViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension PhotoEditorViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   
   //
   func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
     let image = (info[UIImagePickerControllerOriginalImage] as? UIImage)!
-    self.mainImage.image = image
+    mainImage.image = image
+    imagePicker.dismissViewControllerAnimated(true, completion: nil)
     
-    self.imagePicker.dismissViewControllerAnimated(true, completion: nil)
-  
-    //Collection View Constraint
-    UIView.animateWithDuration(0.7) { () -> Void in
-        self.collectionViewConstraint.constant = 0
-        self.view.layoutIfNeeded()
-    }
-    
-    
+    goToFilterMode()
     
   }
   
@@ -176,4 +201,40 @@ extension ViewController : UIImagePickerControllerDelegate, UINavigationControll
   }
   
 }
+
+//Extend and subclass PhotoEditorViewController
+extension PhotoEditorViewController : UICollectionViewDataSource {
+  
+  //Code borrowed from
+  //http://www.raywenderlich.com/78550/beginning-ios-collection-views-swift-part-1
+  func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    return 1
+  }
+  
+  func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return filterFunctions.count
+  }
+  
+  func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier("FilterCell", forIndexPath: indexPath) as! FilterCell
+    cell.filterName?.text = "Filter"
+    
+    let filterFunction = filterFunctions[indexPath.row]
+    
+    if let image = mainImage.image {
+      filterFunction(image, completion: { (filteredImage) -> Void in
+        cell.filterPreview?.image = filteredImage
+      })
+    }
+
+    // Configure the cell
+    return cell
+  }
+  
+}
+
+extension PhotoEditorViewController : UICollectionViewDelegate {
+  
+}
+
 
