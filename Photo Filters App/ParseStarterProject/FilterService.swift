@@ -9,10 +9,10 @@
 import UIKit
 
 class FilterService {
-  class func applySepiaFilter(image : UIImage, completion: (filteredImage : UIImage?) -> Void){
+  class func setUpFilter(filterName : String, image: UIImage) -> UIImage? {
     let image = CIImage(image: image)
-    let sepiaFilter = CIFilter(name: "CISepiaTone")
-    sepiaFilter.setValue(image, forKey: kCIInputImageKey)
+    let filter = CIFilter(name: filterName)
+    filter.setValue(image, forKey: kCIInputImageKey)
     
     
     //gpu context
@@ -23,56 +23,38 @@ class FilterService {
     
     //More from Lecture
     //Get final Image using GPU Rendering
-    let outputImage = sepiaFilter.outputImage
+    let outputImage = filter.outputImage
     let extent = outputImage.extent()
     let cgImage = gpuContext.createCGImage(outputImage, fromRect: extent)
     if let finalImage = UIImage(CGImage: cgImage) {
+      return finalImage
+    } else {
+      return nil
+    }
+  }
+  
+  class func applySepiaFilter(image : UIImage, completion: (filteredImage : UIImage?) -> Void){
+    let filterName = "CISepiaTone"
+    
+    if let finalImage = self.setUpFilter(filterName, image: image) {
       completion(filteredImage: finalImage)
     }
   }
   
   class func applyVibranceFilter(image : UIImage, completion: (filteredImage : UIImage?) -> Void) {
-    let image = CIImage(image: image)
-    let vibranceFilter = CIFilter(name: "CIPhotoEffectMono")
-    vibranceFilter.setValue(image, forKey: kCIInputImageKey)
+    let filterName = "CIPhotoEffectMono"
     
-    
-    //gpu context
-    //copied from lecture
-    let options = [kCIContextWorkingColorSpace : NSNull()]
-    let eaglContext = EAGLContext(API: EAGLRenderingAPI.OpenGLES2)
-    let gpuContext = CIContext(EAGLContext: eaglContext, options: options)
-    
-    //More from Lecture
-    //Get final Image using GPU Rendering
-    let outputImage = vibranceFilter.outputImage
-    let extent = outputImage.extent()
-    let cgImage = gpuContext.createCGImage(outputImage, fromRect: extent)
-    if let finalImage = UIImage(CGImage: cgImage) {
+    if let finalImage = self.setUpFilter(filterName, image: image) {
       completion(filteredImage: finalImage)
     }
+    
   }
   
   class func applyColorCubeFilter(image : UIImage, completion: (filteredImage : UIImage?) -> Void){
-    let image = CIImage(image: image)
-    let colorCube = CIFilter(name: "CIPhotoEffectTransfer")
-    colorCube.setValue(image, forKey: kCIInputImageKey)
+    let filterName = "CIPhotoEffectTransfer"
     
-    
-    //gpu context
-    //copied from lecture
-    let options = [kCIContextWorkingColorSpace : NSNull()]
-    let eaglContext = EAGLContext(API: EAGLRenderingAPI.OpenGLES2)
-    let gpuContext = CIContext(EAGLContext: eaglContext, options: options)
-    
-    //More from Lecture
-    //Get final Image using GPU Rendering
-    let outputImage = colorCube.outputImage
-    let extent = outputImage.extent()
-    let cgImage = gpuContext.createCGImage(outputImage, fromRect: extent)
-    if let finalImage = UIImage(CGImage: cgImage) {
+    if let finalImage = self.setUpFilter(filterName, image: image) {
       completion(filteredImage: finalImage)
     }
   }
-  
 }

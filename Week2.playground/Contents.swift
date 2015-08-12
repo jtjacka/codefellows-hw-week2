@@ -33,3 +33,17 @@ for (index, element) in enumerate(testArray) {
 }
 
 returnArray
+
+
+//MARK: Wednesday
+var counter = 0
+var fibonacciArray : [Double] = [0,1]
+
+while(fibonacciArray.count < 100){
+  let newNumber = fibonacciArray[counter] + fibonacciArray[counter + 1]
+  fibonacciArray.append(newNumber)
+  counter++
+}
+
+fibonacciArray
+fibonacciArray.count

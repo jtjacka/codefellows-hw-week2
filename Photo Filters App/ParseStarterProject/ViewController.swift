@@ -10,6 +10,9 @@ import Parse
 class ViewController: UIViewController {
   
   @IBOutlet weak var mainImage: UIImageView!
+  @IBOutlet weak var filterCollectionView: UICollectionView!
+  @IBOutlet weak var actionButton: UIButton!
+  @IBOutlet weak var collectionViewConstraint: NSLayoutConstraint!
   
   let imagePicker = UIImagePickerController()
   
@@ -17,13 +20,6 @@ class ViewController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view, typically from a nib.
-    
-    let testObject = PFObject(className: "TestObject")
-    testObject["foo"] = "bar"
-    testObject.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-      println("Object has been saved.")
-    }
-    
     
     self.imagePicker.delegate = self
     
@@ -86,6 +82,15 @@ class ViewController: UIViewController {
     action.addAction(cancel)
     action.addAction(choseImage)
     
+    //Popover
+    action.modalPresentationStyle = UIModalPresentationStyle.Popover
+    
+    if let popover = action.popoverPresentationController {
+      popover.sourceView = view
+      popover.sourceRect = actionButton.frame
+    }
+
+    
     //Present the Alert Controller
     self.presentViewController(action, animated: true, completion: nil)
     
@@ -132,6 +137,13 @@ class ViewController: UIViewController {
     action.addAction(vibranceFilter)
     action.addAction(colorCubeFilter)
     
+    //For iPad Only
+    action.modalPresentationStyle = UIModalPresentationStyle.Popover
+    
+    if let popover = action.popoverPresentationController {
+      popover.sourceView = view
+      popover.sourceRect = actionButton.frame
+    }
     
     //Present Filter Alert
     self.presentViewController(action, animated: true, completion: nil)
@@ -145,7 +157,16 @@ extension ViewController : UIImagePickerControllerDelegate, UINavigationControll
   func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
     let image = (info[UIImagePickerControllerOriginalImage] as? UIImage)!
     self.mainImage.image = image
+    
     self.imagePicker.dismissViewControllerAnimated(true, completion: nil)
+  
+    //Collection View Constraint
+    UIView.animateWithDuration(0.7) { () -> Void in
+        self.collectionViewConstraint.constant = 0
+        self.view.layoutIfNeeded()
+    }
+    
+    
     
   }
   
