@@ -105,6 +105,15 @@ class FilterService {
       completion(filteredImage: finalImage, name: displayName)
     }
   }
+  
+  class func applyHefeEffect(image : UIImage, completion: (filteredImage : UIImage?, name: String) -> Void){
+    applyChromeEffect(image) { (filteredImage, name) -> Void in
+      self.applyVignetteEffect(filteredImage!, completion: { (filteredImage, name) -> Void in
+        completion(filteredImage: filteredImage, name: "Hefe")
+      })
+    }
+  }
+  
 
   
 }

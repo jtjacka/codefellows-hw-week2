@@ -33,7 +33,7 @@ class PhotoEditorViewController : UIViewController {
   
   let imagePicker = UIImagePickerController()
   
-  let filterFunctions = [FilterService.applyBWEffect, FilterService.applyChromeEffect, FilterService.applyNoirEffect, FilterService.applySepiaFilter, FilterService.applyVibranceFilter, FilterService.applyVignetteEffect, FilterService.applyVintageEffect]
+  let filterFunctions = [FilterService.applyBWEffect, FilterService.applyChromeEffect, FilterService.applyNoirEffect, FilterService.applySepiaFilter, FilterService.applyVibranceFilter, FilterService.applyVignetteEffect, FilterService.applyVintageEffect, FilterService.applyHefeEffect]
   
   
   override func viewDidLoad() {
