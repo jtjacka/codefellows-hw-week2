@@ -13,10 +13,20 @@ class PhotoEditorViewController : UIViewController {
   @IBOutlet weak var actionButton: UIButton!
   @IBOutlet weak var collectionViewConstraint: NSLayoutConstraint!
   @IBOutlet weak var collectionView: UICollectionView!
+
+    var thumbnail : UIImage?
+    
+    var displayImage : UIImage! {
+        didSet {
+            mainImage.image = displayImage
+            thumbnail = ImageResizer.resizeImage(displayImage)
+            collectionView.reloadData()
+        }
+    }
   
   let imagePicker = UIImagePickerController()
   
-  let filterFunctions = [FilterService.applyColorCubeFilter, FilterService.applySepiaFilter, FilterService.applyVibranceFilter]
+  let filterFunctions = [FilterService.applyColorCubeFilter, FilterService.applySepiaFilter, FilterService.applyVibranceFilter, FilterService.applyColorCubeFilter, FilterService.applySepiaFilter, FilterService.applyVibranceFilter]
   
   
   override func viewDidLoad() {
@@ -26,9 +36,10 @@ class PhotoEditorViewController : UIViewController {
     
     
     
-    self.imagePicker.delegate = self
-    self.collectionView.dataSource = self
-    self.collectionView.delegate = self
+    imagePicker.delegate = self
+    imagePicker.allowsEditing = true
+    collectionView.dataSource = self
+    collectionView.delegate = self
   }
   
   
@@ -174,7 +185,7 @@ class PhotoEditorViewController : UIViewController {
     
     navigationItem.rightBarButtonItem = nil
     
-    collectionViewConstraint.constant = -70
+    collectionViewConstraint.constant = -100
     UIView.animateWithDuration(0.3) { () -> Void in
       self.view.layoutIfNeeded()
     }
@@ -187,8 +198,8 @@ extension PhotoEditorViewController : UIImagePickerControllerDelegate, UINavigat
   
   //
   func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
-    let image = (info[UIImagePickerControllerOriginalImage] as? UIImage)!
-    mainImage.image = image
+    let image = (info[UIImagePickerControllerEditedImage] as? UIImage)!
+    displayImage = image
     imagePicker.dismissViewControllerAnimated(true, completion: nil)
     
     goToFilterMode()
@@ -221,7 +232,7 @@ extension PhotoEditorViewController : UICollectionViewDataSource {
     
     let filterFunction = filterFunctions[indexPath.row]
     
-    if let image = mainImage.image {
+    if let image = thumbnail {
       filterFunction(image, completion: { (filteredImage, filterName) -> Void in
         cell.filterPreview?.image = filteredImage
         cell.filterName?.text = filterName

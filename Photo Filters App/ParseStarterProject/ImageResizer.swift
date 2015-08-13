@@ -9,6 +9,7 @@
 //Code from Week 1 Project and NSHipster
 
 import UIKit
+import ImageIO
 
 class ImageResizer {
   class func resizeImage(image : UIImage) -> UIImage {
@@ -30,4 +31,17 @@ class ImageResizer {
     UIGraphicsEndImageContext()
     return resizedImage
   }
+  
+//  class func resizeImageIO(image: UIImage) -> UIImage {
+//    
+//
+//    if let image = CGImageCreateWithJPEGDataProvider(image, decode: nil, shouldInterpolate: true, intent: CGColorRenderingIntent) {
+//      let options: CFDictionary = [
+//        kCGImageSourceThumbnailMaxPixelSize: max(size.width, size.height) / 2.0,
+//        kCGImageSourceCreateThumbnailFromImageIfAbsent: true
+//      ]
+//      
+//      return CGImageSourceCreateThumbnailAtIndex(imageSource, 0, options).flatMap
+//    }
+//  }
 }
