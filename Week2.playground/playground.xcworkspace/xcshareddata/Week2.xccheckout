@@ -7,18 +7,18 @@
 	<key>IDESourceControlProjectIdentifier</key>
 	<string>D4AFFF61-A72B-4D60-9C91-00663DFD8D9A</string>
 	<key>IDESourceControlProjectName</key>
-	<string>Week2</string>
+	<string>playground</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>A131704341A71509CC6A7ABA4E2D5109884F4ACE</key>
 		<string>https://github.com/jtjacka/codefellows-hw-week2.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>Week2.playground</string>
+	<string>Week2.playground/playground.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>A131704341A71509CC6A7ABA4E2D5109884F4ACE</key>
-		<string>..</string>
+		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/jtjacka/codefellows-hw-week2.git</string>

@@ -15,7 +15,7 @@ class FilterService {
     if let parameters = parameters {
       filter = CIFilter(name: filterName, withInputParameters: parameters)
     } else {
-      filter = CIFilter(name: filterName, withInputParameters: nil)
+      filter = CIFilter(name: filterName)
     }
     
     filter.setValue(image, forKey: kCIInputImageKey)
@@ -48,31 +48,63 @@ class FilterService {
   }
   
   class func applyVibranceFilter(image : UIImage, completion: (filteredImage : UIImage?, name: String) -> Void) {
+    let filterName = "CIVibrance"
+    let displayName = "Vibrance"
+    
+    let parameter = ["inputAmount" : 1.0]
+    
+    if let finalImage = self.setUpFilter(filterName, parameters : parameter, image: image) {
+      completion(filteredImage: finalImage, name: displayName)
+    }
+    
+  }
+  
+  class func applyVintageEffect(image : UIImage, completion: (filteredImage : UIImage?, name: String) -> Void){
+    let filterName = "CIPhotoEffectTransfer"
+    let displayName = "Vintage"
+    
+    if let finalImage = self.setUpFilter(filterName, parameters: nil, image: image) {
+      completion(filteredImage: finalImage, name: displayName)
+    }
+  }
+  
+  class func applyBWEffect(image : UIImage, completion: (filteredImage : UIImage?, name: String) -> Void){
     let filterName = "CIPhotoEffectMono"
     let displayName = "B&W"
     
-    if let finalImage = self.setUpFilter(filterName, parameters : nil, image: image) {
+    if let finalImage = self.setUpFilter(filterName, parameters: nil, image: image) {
       completion(filteredImage: finalImage, name: displayName)
     }
-    
   }
   
-  class func applyColorCubeFilter(image : UIImage, completion: (filteredImage : UIImage?, name: String) -> Void){
-    let filterName = "CIPhotoEffectTransfer"
-    let displayName = "Color Cube"
+  class func applyNoirEffect(image : UIImage, completion: (filteredImage : UIImage?, name: String) -> Void){
+    let filterName = "CIPhotoEffectNoir"
+    let displayName = "Noir"
     
     if let finalImage = self.setUpFilter(filterName, parameters: nil, image: image) {
       completion(filteredImage: finalImage, name: displayName)
     }
   }
   
-  class func applyPhotoEffectTransfer(image : UIImage, completion: (filteredImage : UIImage?, name: String) -> Void){
-    let filterName = "CIPhotoEffectTransfer"
-    let displayName = "Transfer"
+  class func applyChromeEffect(image : UIImage, completion: (filteredImage : UIImage?, name: String) -> Void){
+    let filterName = "CIPhotoEffectChrome"
+    let displayName = "Chrome"
     
     if let finalImage = self.setUpFilter(filterName, parameters: nil, image: image) {
       completion(filteredImage: finalImage, name: displayName)
     }
   }
+  
+  class func applyVignetteEffect(image : UIImage, completion: (filteredImage : UIImage?, name: String) -> Void){
+    let filterName = "CIVignette"
+    let displayName = "Vignette"
+    
+    let parameters = ["inputIntensity" : 1]
+    
+    if let finalImage = self.setUpFilter(filterName, parameters: parameters, image: image) {
+      completion(filteredImage: finalImage, name: displayName)
+    }
+  }
+
   
 }

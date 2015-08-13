@@ -47,3 +47,20 @@ while(fibonacciArray.count < 100){
 
 fibonacciArray
 fibonacciArray.count
+
+//MARK: Thursday
+func isPalindrome(testString : String) -> Bool {
+  let reverseString = reverse(testString)
+  
+  if testString == reverseString {
+    return true
+  } else {
+    return false
+  }
+}
+
+let test1 = isPalindrome("kayak")
+let test2 = isPalindrome("Jeff")
+let test3 = isPalindrome("racecar")
+
+

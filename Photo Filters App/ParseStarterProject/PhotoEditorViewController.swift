@@ -15,18 +15,25 @@ class PhotoEditorViewController : UIViewController {
   @IBOutlet weak var collectionView: UICollectionView!
 
     var thumbnail : UIImage?
-    
+  
+  
+  var originalImage : UIImage! {
+    didSet {
+      displayImage = originalImage
+      thumbnail = ImageResizer.resizeImage(displayImage)
+      collectionView.reloadData()
+    }
+  }
+  
     var displayImage : UIImage! {
         didSet {
             mainImage.image = displayImage
-            thumbnail = ImageResizer.resizeImage(displayImage)
-            collectionView.reloadData()
         }
     }
   
   let imagePicker = UIImagePickerController()
   
-  let filterFunctions = [FilterService.applyColorCubeFilter, FilterService.applySepiaFilter, FilterService.applyVibranceFilter, FilterService.applyColorCubeFilter, FilterService.applySepiaFilter, FilterService.applyVibranceFilter]
+  let filterFunctions = [FilterService.applyBWEffect, FilterService.applyChromeEffect, FilterService.applyNoirEffect, FilterService.applySepiaFilter, FilterService.applyVibranceFilter, FilterService.applyVignetteEffect, FilterService.applyVintageEffect]
   
   
   override func viewDidLoad() {
@@ -68,7 +75,7 @@ class PhotoEditorViewController : UIViewController {
     }
     
     let applyFilter = UIAlertAction(title: "Choose Filter", style: UIAlertActionStyle.Default) { (action) -> Void in
-      self.filterAlert()
+      self.goToFilterMode()
     }
     
     let uploadToParse = UIAlertAction(title: "Upload to Parse", style: UIAlertActionStyle.Default) { (action) -> Void in
@@ -113,59 +120,6 @@ class PhotoEditorViewController : UIViewController {
     
   }
   
-  func filterAlert() {
-    var action = UIAlertController(title: "Choose Filter", message: "Choose a filter to apply to the image", preferredStyle: .ActionSheet)
-    
-    let cancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) {action -> Void in
-      println("User canceled")
-    }
-    
-    let sepiaFilter = UIAlertAction(title: "Sepia", style: UIAlertActionStyle.Default) { (action) -> Void in
-      if let mainImage = self.mainImage.image {
-        FilterService.applySepiaFilter(mainImage, completion: { (filteredImage, filterName) -> Void in
-          self.mainImage.image = filteredImage
-        })
-      }
-      
-      
-    }
-    
-    let vibranceFilter = UIAlertAction(title: "Vibrance", style: UIAlertActionStyle.Default) { (action) -> Void in
-      if let mainImage = self.mainImage.image {
-        FilterService.applyVibranceFilter(mainImage, completion: { (filteredImage, filterName) -> Void in
-          self.mainImage.image = filteredImage
-        })
-      }
-      
-    }
-    
-    let colorCubeFilter = UIAlertAction(title: "Color Cube", style: UIAlertActionStyle.Default) { (action) -> Void in
-      if let mainImage = self.mainImage.image {
-        FilterService.applyColorCubeFilter(mainImage, completion: { (filteredImage, filterName) -> Void in
-          self.mainImage.image = filteredImage
-        })
-      }
-      
-    }
-    
-    
-    action.addAction(cancel)
-    action.addAction(sepiaFilter)
-    action.addAction(vibranceFilter)
-    action.addAction(colorCubeFilter)
-    
-    //For iPad Only
-    action.modalPresentationStyle = UIModalPresentationStyle.Popover
-    
-    if let popover = action.popoverPresentationController {
-      popover.sourceView = view
-      popover.sourceRect = actionButton.frame
-    }
-    
-    //Present Filter Alert
-    self.presentViewController(action, animated: true, completion: nil)
-  }
-  
   func goToFilterMode() {
     //Collection View Constraint
     collectionViewConstraint.constant = 0
@@ -199,7 +153,7 @@ extension PhotoEditorViewController : UIImagePickerControllerDelegate, UINavigat
   //
   func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
     let image = (info[UIImagePickerControllerEditedImage] as? UIImage)!
-    displayImage = image
+    originalImage = image
     imagePicker.dismissViewControllerAnimated(true, completion: nil)
     
     goToFilterMode()
@@ -246,6 +200,18 @@ extension PhotoEditorViewController : UICollectionViewDataSource {
 }
 
 extension PhotoEditorViewController : UICollectionViewDelegate {
+  
+  func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    let filter = filterFunctions[indexPath.row]
+    
+    if let image = originalImage {
+      filter(image, completion: { (filteredImage, name) -> Void in
+        self.displayImage = filteredImage
+      })
+    }
+
+  
+  }
   
 }
 
