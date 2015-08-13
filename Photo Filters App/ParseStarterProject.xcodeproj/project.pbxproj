@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F122E321B7D331300C4991F /* TimelineCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F122E311B7D331300C4991F /* TimelineCell.swift */; };
+		1F122E341B7D381300C4991F /* PhotoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F122E331B7D381300C4991F /* PhotoService.swift */; };
+		1F122E361B7D392A00C4991F /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F122E351B7D392A00C4991F /* GalleryViewController.swift */; };
 		1F651EAB1B7A6E100093E76F /* ParseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F651EAA1B7A6E100093E76F /* ParseService.swift */; };
 		1F651EB31B7AB5B10093E76F /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F651EB21B7AB5B10093E76F /* Keys.swift */; };
 		1F8124151B79981100637EBF /* FilterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8124141B79981100637EBF /* FilterService.swift */; };
@@ -29,6 +32,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1F122E311B7D331300C4991F /* TimelineCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineCell.swift; sourceTree = "<group>"; };
+		1F122E331B7D381300C4991F /* PhotoService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoService.swift; sourceTree = "<group>"; };
+		1F122E351B7D392A00C4991F /* GalleryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		1F651EAA1B7A6E100093E76F /* ParseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseService.swift; sourceTree = "<group>"; };
 		1F651EB21B7AB5B10093E76F /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		1F8124141B79981100637EBF /* FilterService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterService.swift; sourceTree = "<group>"; };
@@ -79,6 +85,7 @@
 				1F8124141B79981100637EBF /* FilterService.swift */,
 				1F651EAA1B7A6E100093E76F /* ParseService.swift */,
 				1FD6B61E1B7BF7D0009677DA /* ImageResizer.swift */,
+				1F122E331B7D381300C4991F /* PhotoService.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -90,6 +97,7 @@
 				81BA81511A49DA1800E65899 /* Images.xcassets */,
 				1FD6B61C1B7BD888009677DA /* FilterCell.swift */,
 				7BDB94421B7C3F2600A2DD9D /* LaunchScreen.xib */,
+				1F122E311B7D331300C4991F /* TimelineCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -97,6 +105,7 @@
 		1F8124131B797AB800637EBF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				1F122E351B7D392A00C4991F /* GalleryViewController.swift */,
 				81BA814C1A49DA1800E65899 /* PhotoEditorViewController.swift */,
 			);
 			name = Controller;
@@ -256,8 +265,11 @@
 			files = (
 				1F8124151B79981100637EBF /* FilterService.swift in Sources */,
 				1FD6B61D1B7BD888009677DA /* FilterCell.swift in Sources */,
+				1F122E341B7D381300C4991F /* PhotoService.swift in Sources */,
 				1FD6B61F1B7BF7D0009677DA /* ImageResizer.swift in Sources */,
 				1F651EAB1B7A6E100093E76F /* ParseService.swift in Sources */,
+				1F122E321B7D331300C4991F /* TimelineCell.swift in Sources */,
+				1F122E361B7D392A00C4991F /* GalleryViewController.swift in Sources */,
 				81BA814D1A49DA1800E65899 /* PhotoEditorViewController.swift in Sources */,
 				81BA814B1A49DA1800E65899 /* AppDelegate.swift in Sources */,
 				1F651EB31B7AB5B10093E76F /* Keys.swift in Sources */,
@@ -361,6 +373,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -378,6 +391,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

@@ -10,7 +10,7 @@ import UIKit
 import Parse
 
 class ParseService {
-  class func uploadImageToParse(image : UIImage, completion:(result : String) -> Void){
+  class func uploadImageToParse(image : UIImage, comment : String, completion:(result : String) -> Void){
     //TODO: Optimize Photo Size Here
     
     //Taken mostly from Parse Documentation
@@ -20,6 +20,7 @@ class ParseService {
     var userPhoto = PFObject(className:"UserPhoto")
     userPhoto["imageName"] = "TestPhoto!"
     userPhoto["imageFile"] = imageFile
+    userPhoto["comment"] = comment
     
     userPhoto.saveInBackgroundWithBlock { (result, error) -> Void in
       if let error = error {

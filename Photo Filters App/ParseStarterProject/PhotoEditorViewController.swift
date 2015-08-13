@@ -7,6 +7,8 @@
 import UIKit
 import Parse
 
+//TODO - Declare protocol here
+
 class PhotoEditorViewController : UIViewController {
   
   @IBOutlet weak var mainImage: UIImageView!
@@ -81,7 +83,7 @@ class PhotoEditorViewController : UIViewController {
     let uploadToParse = UIAlertAction(title: "Upload to Parse", style: UIAlertActionStyle.Default) { (action) -> Void in
      //probably do something
       if let image = self.mainImage.image {
-        ParseService.uploadImageToParse(image, completion: { (result) -> Void in
+        ParseService.uploadImageToParse(image, comment: "Test Comment", completion: { (result) -> Void in
           println("\(result)")
         })
       }
@@ -167,6 +169,7 @@ extension PhotoEditorViewController : UIImagePickerControllerDelegate, UINavigat
   
 }
 
+//MARK: Extend UICollectionViewDataSource
 //Extend and subclass PhotoEditorViewController
 extension PhotoEditorViewController : UICollectionViewDataSource {
   
@@ -199,6 +202,7 @@ extension PhotoEditorViewController : UICollectionViewDataSource {
   
 }
 
+//MARK: Extend UICollectionViewDelegate
 extension PhotoEditorViewController : UICollectionViewDelegate {
   
   func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -214,5 +218,7 @@ extension PhotoEditorViewController : UICollectionViewDelegate {
   }
   
 }
+
+//TODO - Extend our new delegate here
 
 
