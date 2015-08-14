@@ -7,18 +7,18 @@
 import UIKit
 import Parse
 
-//TODO - Declare protocol here
+
 
 class PhotoEditorViewController : UIViewController {
   
+  //Outlets
   @IBOutlet weak var mainImage: UIImageView!
   @IBOutlet weak var actionButton: UIButton!
   @IBOutlet weak var collectionViewConstraint: NSLayoutConstraint!
   @IBOutlet weak var collectionView: UICollectionView!
 
-    var thumbnail : UIImage?
-  
-  
+  //Properties
+  var thumbnail : UIImage?
   var originalImage : UIImage! {
     didSet {
       displayImage = originalImage
@@ -27,14 +27,15 @@ class PhotoEditorViewController : UIViewController {
     }
   }
   
-    var displayImage : UIImage! {
-        didSet {
-            mainImage.image = displayImage
-        }
+  var displayImage : UIImage! {
+    didSet {
+      mainImage.image = displayImage
     }
+  }
   
   let imagePicker = UIImagePickerController()
   
+  //Array of all functions from Filter Service
   let filterFunctions = [FilterService.applyBWEffect, FilterService.applyChromeEffect, FilterService.applyNoirEffect, FilterService.applySepiaFilter, FilterService.applyVibranceFilter, FilterService.applyVignetteEffect, FilterService.applyVintageEffect, FilterService.applyHefeEffect]
   
   
@@ -42,17 +43,23 @@ class PhotoEditorViewController : UIViewController {
     super.viewDidLoad()
     // Do any additional setup after loading the view, typically from a nib.
     
-    
-    
-    
+
     imagePicker.delegate = self
     imagePicker.allowsEditing = true
     collectionView.dataSource = self
     collectionView.delegate = self
   }
   
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    if segue.identifier == "showGallery" {
+      if let galleryViewController = segue.destinationViewController as? GalleryViewController {
+        galleryViewController.delegate = self
+      }
+    }
+  }
   
   
+  //MARK: Button Clicked
   @IBAction func buttonClicked(sender: AnyObject) {
     var action  = UIAlertController(title: "Choose Image", message: "Choose an image or select a filter", preferredStyle: .ActionSheet)
     
@@ -89,6 +96,9 @@ class PhotoEditorViewController : UIViewController {
       }
     }
     
+    let segueToGallery = UIAlertAction(title: "Gallery", style: UIAlertActionStyle.Default) { (action) -> Void in
+      self.performSegueWithIdentifier("showGallery", sender: self)
+    }
     
     
     //Logic for when to display actions
@@ -105,6 +115,7 @@ class PhotoEditorViewController : UIViewController {
     
     
     //Add Actions
+    action.addAction(segueToGallery)
     action.addAction(cancel)
     action.addAction(choseImage)
     
@@ -122,6 +133,7 @@ class PhotoEditorViewController : UIViewController {
     
   }
   
+  //MARK: Enter Filter Mode
   func goToFilterMode() {
     //Collection View Constraint
     collectionViewConstraint.constant = 0
@@ -136,6 +148,7 @@ class PhotoEditorViewController : UIViewController {
     
   }
   
+  //MARK: Exit Filter Mode
   func exitFilterMode() {
     println("Exit filter mode")
     
@@ -150,9 +163,9 @@ class PhotoEditorViewController : UIViewController {
   
 }
 
+//MARK: Image Picker
 extension PhotoEditorViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   
-  //
   func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
     let image = (info[UIImagePickerControllerEditedImage] as? UIImage)!
     originalImage = image
@@ -172,12 +185,6 @@ extension PhotoEditorViewController : UIImagePickerControllerDelegate, UINavigat
 //MARK: Extend UICollectionViewDataSource
 //Extend and subclass PhotoEditorViewController
 extension PhotoEditorViewController : UICollectionViewDataSource {
-  
-  //Code borrowed from
-  //http://www.raywenderlich.com/78550/beginning-ios-collection-views-swift-part-1
-  func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-    return 1
-  }
   
   func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return filterFunctions.count
@@ -213,12 +220,18 @@ extension PhotoEditorViewController : UICollectionViewDelegate {
         self.displayImage = filteredImage
       })
     }
-
   
   }
   
 }
 
-//TODO - Extend our new delegate here
+//MARK: Extend ImageSelectedDelegate
+extension PhotoEditorViewController : ImageSelectedDelegate {
+  func controllerDidSelectImage(receivedImage : UIImage) {
+    
+    println("Received Image : \(receivedImage.size)")
+    self.originalImage = receivedImage
+  }
+}
 
 
