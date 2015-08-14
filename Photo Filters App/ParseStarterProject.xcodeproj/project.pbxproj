@@ -11,6 +11,7 @@
 		1F122E341B7D381300C4991F /* PhotoService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F122E331B7D381300C4991F /* PhotoService.swift */; };
 		1F122E381B7D60E300C4991F /* GalleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F122E371B7D60E300C4991F /* GalleryViewController.swift */; };
 		1F122E3A1B7D61B200C4991F /* GalleryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F122E391B7D61B200C4991F /* GalleryCell.swift */; };
+		1F4E7E7C1B7E4FEB0071E568 /* TimelineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4E7E7B1B7E4FEB0071E568 /* TimelineViewController.swift */; };
 		1F651EAB1B7A6E100093E76F /* ParseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F651EAA1B7A6E100093E76F /* ParseService.swift */; };
 		1F651EB31B7AB5B10093E76F /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F651EB21B7AB5B10093E76F /* Keys.swift */; };
 		1F8124151B79981100637EBF /* FilterService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8124141B79981100637EBF /* FilterService.swift */; };
@@ -37,6 +38,7 @@
 		1F122E331B7D381300C4991F /* PhotoService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoService.swift; sourceTree = "<group>"; };
 		1F122E371B7D60E300C4991F /* GalleryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryViewController.swift; sourceTree = "<group>"; };
 		1F122E391B7D61B200C4991F /* GalleryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GalleryCell.swift; sourceTree = "<group>"; };
+		1F4E7E7B1B7E4FEB0071E568 /* TimelineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimelineViewController.swift; sourceTree = "<group>"; };
 		1F651EAA1B7A6E100093E76F /* ParseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseService.swift; sourceTree = "<group>"; };
 		1F651EB21B7AB5B10093E76F /* Keys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		1F8124141B79981100637EBF /* FilterService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterService.swift; sourceTree = "<group>"; };
@@ -108,6 +110,7 @@
 		1F8124131B797AB800637EBF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				1F4E7E7B1B7E4FEB0071E568 /* TimelineViewController.swift */,
 				1F122E371B7D60E300C4991F /* GalleryViewController.swift */,
 				81BA814C1A49DA1800E65899 /* PhotoEditorViewController.swift */,
 			);
@@ -271,6 +274,7 @@
 				1F122E3A1B7D61B200C4991F /* GalleryCell.swift in Sources */,
 				1F122E341B7D381300C4991F /* PhotoService.swift in Sources */,
 				1FD6B61F1B7BF7D0009677DA /* ImageResizer.swift in Sources */,
+				1F4E7E7C1B7E4FEB0071E568 /* TimelineViewController.swift in Sources */,
 				1F651EAB1B7A6E100093E76F /* ParseService.swift in Sources */,
 				1F122E321B7D331300C4991F /* TimelineCell.swift in Sources */,
 				81BA814D1A49DA1800E65899 /* PhotoEditorViewController.swift in Sources */,

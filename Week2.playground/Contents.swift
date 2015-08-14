@@ -51,8 +51,9 @@ fibonacciArray.count
 //MARK: Thursday
 func isPalindrome(testString : String) -> Bool {
   let reverseString = reverse(testString)
+  let testArray = Array(testString)
   
-  if testString == reverseString {
+  if testArray == reverseString {
     return true
   } else {
     return false
@@ -62,5 +63,37 @@ func isPalindrome(testString : String) -> Bool {
 let test1 = isPalindrome("kayak")
 let test2 = isPalindrome("Jeff")
 let test3 = isPalindrome("racecar")
+
+
+//MARK: Data Structure Challenge
+class Stack {
+  
+  private var stackArray : [String]
+  
+  init(firstObject : String) {
+    stackArray = [firstObject]
+  }
+  
+  func addToStack(newObject : String){
+    stackArray.insert(newObject, atIndex : 0)
+  }
+  
+  func removeFromStack() -> String {
+    var tempStorage = stackArray[0]
+    stackArray.removeAtIndex(0)
+    return tempStorage
+  }
+  
+  func peekStack() -> String {
+    return stackArray[0]
+  }
+  
+}
+
+let testStack1 = Stack(firstObject: "Zero")
+
+testStack1.addToStack("One")
+testStack1.addToStack("Two")
+let stringFromStack = testStack1.peekStack()
 
 
