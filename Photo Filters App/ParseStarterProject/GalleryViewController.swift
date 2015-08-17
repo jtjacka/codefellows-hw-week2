@@ -68,6 +68,7 @@ extension GalleryViewController : UICollectionViewDataSource {
   }
 }
 
+//MARK: Extend UICollectionViewDelegate
 extension GalleryViewController : UICollectionViewDelegate {
   
   

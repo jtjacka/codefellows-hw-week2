@@ -40,6 +40,12 @@ class PhotoEditorViewController : UIViewController {
     }
   }
   
+  //Constants
+  let kAnimationDuration = 0.3
+  let kEditorViewHidden : CGFloat = -100
+  let kEditorViewShow : CGFloat = 0
+  
+  
   let imagePicker = UIImagePickerController()
   
   //Array of all functions from Filter Service
@@ -107,7 +113,7 @@ class PhotoEditorViewController : UIViewController {
   //MARK: Enter Filter Mode
   func goToFilterMode() {
     //Collection View Constraint
-    editorViewConstraint.constant = 0
+    editorViewConstraint.constant = kEditorViewShow
     
     //Disable Some Buttons
     uploadCloudButton.enabled = false
@@ -119,7 +125,7 @@ class PhotoEditorViewController : UIViewController {
     commentField.hidden = false
     commentField.enabled = true
     
-    UIView.animateWithDuration(0.5) { () -> Void in
+    UIView.animateWithDuration(0.3) { () -> Void in
       self.view.layoutIfNeeded()
     }
     
@@ -145,8 +151,8 @@ class PhotoEditorViewController : UIViewController {
     
     navigationItem.rightBarButtonItem = nil
     
-    editorViewConstraint.constant = -100
-    UIView.animateWithDuration(0.3) { () -> Void in
+    editorViewConstraint.constant = kEditorViewHidden
+    UIView.animateWithDuration(kAnimationDuration) { () -> Void in
       self.view.layoutIfNeeded()
     }
     
@@ -158,7 +164,7 @@ class PhotoEditorViewController : UIViewController {
     var info = notification.userInfo!
     var keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
     
-    UIView.animateWithDuration(0.1, animations: { () -> Void in
+    UIView.animateWithDuration(kAnimationDuration, animations: { () -> Void in
       self.editorViewConstraint.constant = keyboardFrame.size.height
     })
   }
@@ -168,8 +174,8 @@ class PhotoEditorViewController : UIViewController {
     var info = notification.userInfo!
     var keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
     
-    UIView.animateWithDuration(0.1, animations: { () -> Void in
-      self.editorViewConstraint.constant = 0
+    UIView.animateWithDuration(kAnimationDuration, animations: { () -> Void in
+      self.editorViewConstraint.constant = self.kEditorViewShow
     })
   }
   
