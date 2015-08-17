@@ -12,10 +12,17 @@ import Parse
 class PhotoEditorViewController : UIViewController {
   
   //Outlets
+  @IBOutlet weak var editorControls: UIView!
   @IBOutlet weak var mainImage: UIImageView!
   @IBOutlet weak var actionButton: UIButton!
-  @IBOutlet weak var collectionViewConstraint: NSLayoutConstraint!
   @IBOutlet weak var collectionView: UICollectionView!
+  @IBOutlet weak var editorViewConstraint: NSLayoutConstraint!
+  @IBOutlet weak var uploadCloudButton: UIButton!
+  @IBOutlet weak var useCameraButton: UIButton!
+  @IBOutlet weak var selectFromGalleryButton: UIButton!
+  @IBOutlet weak var commentField: UITextField!
+  @IBOutlet weak var editorSlider: UISlider!
+  @IBOutlet weak var editButton: UIButton!
 
   //Properties
   var thumbnail : UIImage?
@@ -41,7 +48,14 @@ class PhotoEditorViewController : UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view, typically from a nib.
+    //Register Notification Observers for Keyboard
+    //Code borrowed from http://stackoverflow.com/questions/25693130/move-textfield-when-keyboard-appears-swift
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWasShown:"), name:UIKeyboardWillShowNotification, object: nil);
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardHasHidden:"), name:UIKeyboardWillHideNotification, object: nil);
+    
+    //Hide Elements for Editor Mode
+    commentField.hidden = true
+    editorSlider.hidden = true
     
 
     imagePicker.delegate = self
@@ -58,85 +72,52 @@ class PhotoEditorViewController : UIViewController {
     }
   }
   
+  //MARK: Camera Action
+  @IBAction func useCamera(sender: AnyObject) {
+    self.imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
+    self.presentViewController(self.imagePicker, animated: true, completion: nil)
+  }
   
-  //MARK: Button Clicked
-  @IBAction func buttonClicked(sender: AnyObject) {
-    var action  = UIAlertController(title: "Choose Image", message: "Choose an image or select a filter", preferredStyle: .ActionSheet)
-    
-    let cancel = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel) {action -> Void in
-      println("User canceled")
-    }
-    
-    let choseImage = UIAlertAction(title: "Use Image from Library", style: UIAlertActionStyle.Default) { (action) -> Void in
-      println("Choose Image")
-      
-      //Call Image Picker Controller
-      self.imagePicker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-      self.presentViewController(self.imagePicker, animated: true, completion: nil)
-      
-    }
-    
-    let takePicture = UIAlertAction(title: "Take Photo", style: UIAlertActionStyle.Default) { (action) -> Void in
-      println("Taking a picture")
-      
-      self.imagePicker.sourceType = UIImagePickerControllerSourceType.Camera
-      self.presentViewController(self.imagePicker, animated: true, completion: nil)
-    }
-    
-    let applyFilter = UIAlertAction(title: "Choose Filter", style: UIAlertActionStyle.Default) { (action) -> Void in
-      self.goToFilterMode()
-    }
-    
-    let uploadToParse = UIAlertAction(title: "Upload to Parse", style: UIAlertActionStyle.Default) { (action) -> Void in
-     //probably do something
-      if let image = self.mainImage.image {
-        ParseService.uploadImageToParse(image, comment: "Test Comment", completion: { (result) -> Void in
+  //MARK: Choose Image From Gallery
+  @IBAction func imageFromGallery(sender: AnyObject) {
+    self.performSegueWithIdentifier("showGallery", sender: self)
+  }
+  
+  //MARK: Upload Image to Parse
+  @IBAction func uploadToParse(sender: AnyObject) {
+    if let image = self.mainImage.image {
+      if commentField.hasText() {
+        ParseService.uploadImageToParse(image, comment: commentField.text, completion: { (result) -> Void in
+          println("\(result)")
+        })
+      } else {
+        ParseService.uploadImageToParse(image, comment: "No Comment!", completion: { (result) -> Void in
           println("\(result)")
         })
       }
-    }
-    
-    let segueToGallery = UIAlertAction(title: "Gallery", style: UIAlertActionStyle.Default) { (action) -> Void in
-      self.performSegueWithIdentifier("showGallery", sender: self)
-    }
-    
-    
-    //Logic for when to display actions
-    if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
-      action.addAction(takePicture)
-    }
-    
-    
-    if let image = self.mainImage.image {
-      action.addAction(applyFilter)
-      action.addAction(uploadToParse)
-    }
-    
-    
-    
-    //Add Actions
-    action.addAction(segueToGallery)
-    action.addAction(cancel)
-    action.addAction(choseImage)
-    
-    //Popover for iPad
-    action.modalPresentationStyle = UIModalPresentationStyle.Popover
-    
-    if let popover = action.popoverPresentationController {
-      popover.sourceView = view
-      popover.sourceRect = actionButton.frame
-    }
 
-    
-    //Present the Alert Controller
-    self.presentViewController(action, animated: true, completion: nil)
-    
+    }
+  }
+  
+  //MARK: Enter Edit Mode Through Button
+  @IBAction func editButtonAction(sender: AnyObject) {
+    goToFilterMode()
   }
   
   //MARK: Enter Filter Mode
   func goToFilterMode() {
     //Collection View Constraint
-    collectionViewConstraint.constant = 0
+    editorViewConstraint.constant = 0
+    
+    //Disable Some Buttons
+    uploadCloudButton.enabled = false
+    useCameraButton.enabled = false
+    selectFromGalleryButton.enabled = false
+    editButton.hidden = true
+    
+    //Enable Comment Field
+    commentField.hidden = false
+    commentField.enabled = true
     
     UIView.animateWithDuration(0.5) { () -> Void in
       self.view.layoutIfNeeded()
@@ -152,13 +133,44 @@ class PhotoEditorViewController : UIViewController {
   func exitFilterMode() {
     println("Exit filter mode")
     
+    //Re-enable Buttons
+    uploadCloudButton.enabled = true
+    useCameraButton.enabled = true
+    selectFromGalleryButton.enabled = true
+    editButton.hidden = false
+    
+    //Enable Comment Field
+    commentField.enabled = false
+    commentField.hidden = true
+    
     navigationItem.rightBarButtonItem = nil
     
-    collectionViewConstraint.constant = -100
+    editorViewConstraint.constant = -100
     UIView.animateWithDuration(0.3) { () -> Void in
       self.view.layoutIfNeeded()
     }
     
+  }
+  
+  //MARK: Keyboard will show
+  //Code borrowed from http://stackoverflow.com/questions/25693130/move-textfield-when-keyboard-appears-swift
+  func keyboardWasShown(notification: NSNotification) {
+    var info = notification.userInfo!
+    var keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+    
+    UIView.animateWithDuration(0.1, animations: { () -> Void in
+      self.editorViewConstraint.constant = keyboardFrame.size.height
+    })
+  }
+  
+  //MARK: Keyboard will hide
+  func keyboardHasHidden(notification: NSNotification) {
+    var info = notification.userInfo!
+    var keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+    
+    UIView.animateWithDuration(0.1, animations: { () -> Void in
+      self.editorViewConstraint.constant = 0
+    })
   }
   
 }
@@ -231,6 +243,8 @@ extension PhotoEditorViewController : ImageSelectedDelegate {
     
     println("Received Image : \(receivedImage.size)")
     self.originalImage = receivedImage
+    
+    goToFilterMode()
   }
 }
 

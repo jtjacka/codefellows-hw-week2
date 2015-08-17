@@ -47,7 +47,8 @@ extension TimelineViewController : UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("TimelineCell", forIndexPath: indexPath) as! TimelineCell
-        
+      
+        //Proper way to use a tuple?
         cell.timelineImage?.image = timelineData[indexPath.row].0
         cell.userComment?.text = timelineData[indexPath.row].1
         
