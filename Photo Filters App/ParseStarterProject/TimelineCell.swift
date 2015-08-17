@@ -10,7 +10,9 @@ import UIKit
 
 class TimelineCell: UITableViewCell {
 
-  @IBOutlet weak var mainImage: UIView!
+    @IBOutlet weak var timelineImage: UIImageView!
+    @IBOutlet weak var mainImage: UIView!
+    @IBOutlet weak var userComment: UILabel!
 
 
 }

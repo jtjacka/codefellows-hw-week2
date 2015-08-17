@@ -17,7 +17,7 @@ class ParseService {
     let imageData = UIImagePNGRepresentation(image)
     let imageFile = PFFile(name: "testphoto.png", data: imageData)
     
-    var userPhoto = PFObject(className:"Image")
+    var userPhoto = PFObject(className:"UserPhoto")
     userPhoto["imageName"] = "TestPhoto!"
     userPhoto["imageFile"] = imageFile
     userPhoto["comment"] = comment
@@ -34,30 +34,36 @@ class ParseService {
     
   }
   
-  class func downloadImagesFromParse(completion:(imagesFromParse : [UIImage]) -> Void) {
-    let query = PFQuery(className: "Image")
+    //Download Images from Parse for use in time
+    //Completion with a tuple, why not?
+  class func downloadImagesFromParse(completion:(imagesFromParse : [(UIImage, String)]?) -> Void) {
+    let query = PFQuery(className: "UserPhoto")
     
-    var imagesFromQuery : [UIImage] = []
+    var imagesFromQuery : [(UIImage, String)] = []
     
+    
+    //Taken from Lecture
     query.findObjectsInBackgroundWithBlock { (results, error) -> Void in
       if let error = error {
         println(error.localizedDescription)
+        completion(imagesFromParse: nil)
       } else if let images = results as? [PFObject] {
         println("Images received: \(images.count)")
         for image in images {
-          if let imageFile = image["image"] as? PFFile {
+          if let imageFile = image["imageFile"] as? PFFile,
+            comment = image["comment"] as? String{
             imageFile.getDataInBackgroundWithBlock({ (data, error) -> Void in
               if let error = error {
                 println(error.localizedDescription)
               } else if let data = data,
                 image = UIImage(data: data) {
-                  imagesFromQuery.append(image)
+                    imagesFromQuery.append(image, comment)
+                    completion(imagesFromParse: imagesFromQuery)
               }
             })
           }
         }
-        //Send Images Array Back to the View Controller
-        completion(imagesFromParse: imagesFromQuery)
+        
       }
     }
   }
