@@ -36,10 +36,10 @@ class ParseService {
   
     //Download Images from Parse for use in time
     //Completion with a tuple, why not?
-  class func downloadImagesFromParse(completion:(imagesFromParse : [(UIImage, String)]?) -> Void) {
+  class func downloadPostInfoFromParse(completion:(imagesFromParse : [(PFFile, String)]?) -> Void) {
     let query = PFQuery(className: "UserPhoto")
     
-    var imagesFromQuery : [(UIImage, String)] = []
+    var imagesFromQuery : [(PFFile, String)] = []
     
     
     //Taken from Lecture
@@ -52,19 +52,25 @@ class ParseService {
         for image in images {
           if let imageFile = image["imageFile"] as? PFFile,
             comment = image["comment"] as? String{
-            imageFile.getDataInBackgroundWithBlock({ (data, error) -> Void in
-              if let error = error {
-                println(error.localizedDescription)
-              } else if let data = data,
-                image = UIImage(data: data) {
-                    imagesFromQuery.append(image, comment)
-                    completion(imagesFromParse: imagesFromQuery)
-              }
-            })
+              imagesFromQuery.append(imageFile, comment)
           }
         }
-        
+        completion(imagesFromParse: imagesFromQuery)
       }
     }
+  }
+  
+  
+  //Download Images from Parse
+  class func downloadImagesFromParse(imageFile : PFFile, completion: (imageReturn : UIImage) -> Void) {
+    imageFile.getDataInBackgroundWithBlock({ (data, error) -> Void in
+      if let error = error {
+        println(error.localizedDescription)
+      } else if let data = data,
+        image = UIImage(data: data) {
+          completion(imageReturn: image)
+      }
+    })
+
   }
 }

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Parse
+
 
 class TimelineViewController: UIViewController {
 
@@ -14,7 +16,7 @@ class TimelineViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     //Properties
-    var timelineData : [(UIImage, String)] = []
+    var timelineData : [(PFFile, String)] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +24,7 @@ class TimelineViewController: UIViewController {
         tableView.dataSource = self
         
         //Grab Timeline Info from Parse
-        ParseService.downloadImagesFromParse { (imagesFromParse) -> Void in
+        ParseService.downloadPostInfoFromParse{ (imagesFromParse) -> Void in
             if let imageData = imagesFromParse {
                 self.timelineData = imageData
                 self.tableView.reloadData()
@@ -49,7 +51,10 @@ extension TimelineViewController : UITableViewDataSource {
         let cell = tableView.dequeueReusableCellWithIdentifier("TimelineCell", forIndexPath: indexPath) as! TimelineCell
       
         //Proper way to use a tuple?
-        cell.timelineImage?.image = timelineData[indexPath.row].0
+        ParseService.downloadImagesFromParse(timelineData[indexPath.row].0, completion: { (imageReturn) -> Void in
+          cell.timelineImage?.image = imageReturn
+        })
+      
         cell.userComment?.text = timelineData[indexPath.row].1
         
         return cell
