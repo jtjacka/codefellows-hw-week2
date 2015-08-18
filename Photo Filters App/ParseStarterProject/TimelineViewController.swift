@@ -52,7 +52,9 @@ extension TimelineViewController : UITableViewDataSource {
       
         //Proper way to use a tuple?
         ParseService.downloadImagesFromParse(timelineData[indexPath.row].0, completion: { (imageReturn) -> Void in
-          cell.timelineImage?.image = imageReturn
+          NSOperationQueue.mainQueue().addOperationWithBlock({ () -> Void in
+            cell.timelineImage?.image = imageReturn
+          })
         })
       
         cell.userComment?.text = timelineData[indexPath.row].1
